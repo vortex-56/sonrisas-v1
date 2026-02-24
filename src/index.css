@@ -1,0 +1,355 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.625rem;
+
+    /* Colores del juego */
+    --diente-rojo: 0 84% 50%;
+    --diente-azul: 210 100% 50%;
+    --diente-verde: 120 70% 40%;
+    --diente-amarillo: 50 100% 50%;
+    --telon-rojo: 0 85% 35%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    overflow-x: hidden;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+  }
+}
+
+/* Animaciones del telón */
+@keyframes curtainOpen {
+  0% {
+    transform: scaleY(1);
+  }
+
+  100% {
+    transform: scaleY(0);
+  }
+}
+
+@keyframes curtainOpenLeft {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes curtainOpenRight {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes logoFadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
+  }
+
+  50% {
+    box-shadow: 0 0 40px rgba(220, 38, 38, 0.8);
+  }
+}
+
+@keyframes bounce-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  70% {
+    transform: scale(0.9);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sparkle {
+
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-curtain-left {
+  animation: curtainOpenLeft 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-curtain-right {
+  animation: curtainOpenRight 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-logo-reveal {
+  animation: logoFadeIn 3s ease-in-out forwards;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-bounce-in {
+  animation: bounce-in 0.6s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s ease-out forwards;
+}
+
+.animate-sparkle {
+  animation: sparkle 1.5s ease-in-out infinite;
+}
+
+/* Telón con textura de terciopelo */
+.velvet-curtain {
+  background: linear-gradient(90deg,
+      hsl(var(--telon-rojo)) 0%,
+      hsl(0 85% 45%) 25%,
+      hsl(var(--telon-rojo)) 50%,
+      hsl(0 85% 30%) 75%,
+      hsl(var(--telon-rojo)) 100%);
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5);
+}
+
+.velvet-curtain::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(90deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.1) 2px,
+      rgba(0, 0, 0, 0.1) 4px);
+  pointer-events: none;
+}
+
+/* Estilos para los segmentos */
+.segment {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* En escritorio: altura fija para que todo quepa sin scroll */
+@media (min-width: 768px) {
+  .segment {
+    height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+    padding: 1.5rem;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+}
+
+/* Fondos blancos para todos los segmentos */
+.segment-1,
+.segment-2,
+.segment-3,
+.segment-4,
+.segment-5,
+.segment-6,
+.segment-6-gallery,
+.segment-7 {
+  background: #ffffff;
+}
+
+/* Botón de audio */
+.audio-button {
+  @apply flex items-center gap-2 px-4 py-2 rounded-full font-semibold transition-all duration-300;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
+}
+
+.audio-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(251, 191, 36, 0.6);
+}
+
+.audio-button.playing {
+  animation: pulse-glow 1s ease-in-out infinite;
+}
+
+/* Botones flotantes de navegación */
+.nav-float-button {
+  @apply w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300;
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+}
+
+.nav-float-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.6);
+}
+
+.nav-float-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Tarjetas de reglas */
+.rule-card {
+  @apply p-6 rounded-2xl transition-all duration-300;
+  background: #ededed;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+  border: 2px solid transparent;
+}
+
+.rule-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  border-color: #fbbf24;
+}
+
+/* Video container */
+.video-container {
+  @apply relative rounded-2xl overflow-hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+/* Sello Indecopi */
+.seal-stamp {
+  @apply relative;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .segment {
+    padding: 1rem;
+  }
+
+  .rule-card {
+    @apply p-4;
+  }
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #dc2626;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b91c1c;
+}
